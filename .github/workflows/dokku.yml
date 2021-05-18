@@ -1,4 +1,4 @@
-name: CI
+name: checklister
 
 on:
   push:
@@ -20,6 +20,6 @@ jobs:
       uses: idoberko2/dokku-deploy-github-action@v1
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          dokku-host: 'djangobot.ml'
-          app-name: 'dtb'
+          dokku-host: 'checklister.ml'
+          app-name: 'checklister'
           git-push-flags: '--force'
