@@ -12,7 +12,6 @@ whitenoise
 gunicorn
 uvicorn
 uvloop
-
 httptools
 
 # Databases
