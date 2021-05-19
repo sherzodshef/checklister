@@ -1,8 +1,10 @@
 """
     Telegram event handlers
 """
+import logging
 
 import telegram
+from telegram.error import NetworkError
 from telegram.ext import (
     Updater, Dispatcher, Filters,
     CommandHandler, MessageHandler,
@@ -52,4 +54,7 @@ def process_telegram_event(update_json):
 # Global variable - best way I found to init Telegram bot
 bot = telegram.Bot(TELEGRAM_TOKEN)
 dispatcher = setup_dispatcher(Dispatcher(bot, None, workers=0, use_context=True))
-TELEGRAM_BOT_USERNAME = bot.get_me()["username"]
+try:
+    TELEGRAM_BOT_USERNAME = bot.get_me()["username"]
+except NetworkError:
+    logging.error(f'{NetworkError}')

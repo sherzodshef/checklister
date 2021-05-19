@@ -11,6 +11,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=256, null=True, blank=True)
     language_code = models.CharField(max_length=8, null=True, blank=True, help_text="Telegram client's lang")
     deep_link = models.CharField(max_length=64, null=True, blank=True)
+    phone_number = models.IntegerField(null=True)
 
     is_blocked_bot = models.BooleanField(default=False)
     is_banned = models.BooleanField(default=False)
@@ -54,6 +55,39 @@ class User(models.Model):
 
     def invited_users(self):  # --> User queryset 
         return User.objects.filter(deep_link=str(self.user_id), created_at__gt=self.created_at)
+
+
+class Checklist(models.Model):
+    shortname = models.CharField(max_length=36, blank=False)
+    description = models.CharField(max_length=255, blank=True)
+    priority = models.IntegerField()
+    deadline = models.DateTimeField()
+    is_daily = models.BooleanField(default=True)
+    end_time = models.TimeField(default='12:00:00')
+    status = models.CharField(max_length=30, blank=False, default='pending')
+
+    users = models.ManyToManyField(User)
+
+    def __str__(self):
+        return f'{self.shortname}'
+
+
+class Task(models.Model):
+    shortname = models.CharField(max_length=36, blank=False)
+    description = models.CharField(max_length=255, blank=False)
+    priority = models.IntegerField()
+    deadline = models.DateTimeField()
+    is_daily = models.BooleanField(default=True)
+    end_time = models.TimeField(default='12:00:00')
+    status = models.CharField(max_length=30, blank=False, default='pending')
+
+    parent = models.ForeignKey('Checklist', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.shortname}'
+
+    def task_id(self):
+        return f'{self.pk}'
 
 
 class Location(models.Model):

@@ -148,6 +148,8 @@ PERSISTENCE_FILE = os.getenv("PERSISTENCE_FILE")
 # -----> LOGGING
 ENABLE_DECORATOR_LOGGING = os.getenv('ENABLE_DECORATOR_LOGGING', True)
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # -----> SENTRY
 # import sentry_sdk
