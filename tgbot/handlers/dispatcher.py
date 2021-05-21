@@ -16,14 +16,15 @@ from celery.decorators import task  # event processing in async mode
 
 from dtb.settings import TELEGRAM_TOKEN
 
-from tgbot.main import receiver, main_menu
+from tgbot.main import receiver, menu_main
+
 
 def setup_dispatcher(dp):
     """
     Adding handlers for events from Telegram
     """
 
-    dp.add_handler(CommandHandler("start", callback=main_menu))
+    dp.add_handler(CommandHandler("start", callback=menu_main))
     dp.add_handler(MessageHandler(Filters.all, receiver))
     dp.add_handler(CallbackQueryHandler(receiver))
 
