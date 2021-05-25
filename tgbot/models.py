@@ -74,7 +74,7 @@ class Checklist(models.Model):
 
 class Task(models.Model):
     shortname = models.CharField(max_length=36, blank=False)
-    description = models.CharField(max_length=255, blank=False)
+    description = models.CharField(max_length=255, blank=True, null=False)
     priority = models.IntegerField()
     deadline = models.DateTimeField()
     is_daily = models.BooleanField(default=True)
