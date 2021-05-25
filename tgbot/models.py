@@ -80,6 +80,7 @@ class Task(models.Model):
     is_daily = models.BooleanField(default=True)
     end_time = models.TimeField(default='12:00:00')
     status = models.CharField(max_length=30, blank=False, default='pending')
+    comment = models.CharField(max_length=255, blank=True, null=False, default='')
 
     parent = models.ForeignKey('Checklist', on_delete=models.CASCADE)
 
@@ -88,6 +89,16 @@ class Task(models.Model):
 
     def task_id(self):
         return f'{self.pk}'
+
+    def bstr(self):
+        if self.status == 'closed':
+            return f'<s>{self.shortname}</s>'
+        elif self.status == 'completed':
+            return f'✅ {self.shortname}'
+        elif self.status == 'pending':
+            return f'⏳ {self.shortname}'
+        elif self.status == 'cancelled':
+            return f'🚫 {self.shortname}'
 
 
 class Location(models.Model):

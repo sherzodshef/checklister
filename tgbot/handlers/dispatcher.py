@@ -16,7 +16,7 @@ from celery.decorators import task  # event processing in async mode
 
 from dtb.settings import TELEGRAM_TOKEN
 
-from tgbot.main import receiver, menu_main
+from tgbot.main import __receiver, menu_main, __callback_receiver
 
 
 def setup_dispatcher(dp):
@@ -25,8 +25,8 @@ def setup_dispatcher(dp):
     """
 
     dp.add_handler(CommandHandler("start", callback=menu_main))
-    dp.add_handler(MessageHandler(Filters.all, receiver))
-    dp.add_handler(CallbackQueryHandler(receiver))
+    dp.add_handler(MessageHandler(Filters.all, __receiver))
+    dp.add_handler(CallbackQueryHandler(__callback_receiver))
 
     return dp
 
