@@ -58,13 +58,23 @@ class User(models.Model):
 
 
 class Checklist(models.Model):
+    status_choices = (
+        ('pending', 'pending'),
+        ('completed', 'completed'),
+        ('cancelled', 'cancelled')
+    )
+    priority_choices = (
+        ('1', 'First'),
+        ('2', 'Second'),
+        ('3', 'Third')
+    )
     shortname = models.CharField(max_length=36, blank=False)
     description = models.CharField(max_length=255, blank=True)
-    priority = models.IntegerField()
+    priority = models.IntegerField(choices=priority_choices)
     deadline = models.DateTimeField()
     is_daily = models.BooleanField(default=True)
     end_time = models.TimeField(default='12:00:00')
-    status = models.CharField(max_length=30, blank=False, default='pending')
+    status = models.CharField(max_length=30, choices=status_choices, blank=False, default='pending')
 
     users = models.ManyToManyField(User)
 
