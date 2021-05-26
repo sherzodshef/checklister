@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 from dtb.settings import DEBUG
 
-from tgbot.models import Location, Arcgis
+from tgbot.models import Location, Arcgis, Checklist, Task
 from tgbot.models import User, UserActionLog
 from tgbot.forms import BroadcastForm
 from tgbot.handlers import utils
@@ -53,6 +53,13 @@ class UserAdmin(admin.ModelAdmin):
             request, "admin/broadcast_message.html", {'items': queryset, 'form': form, 'title': u' '}
         )
 
+@admin.register(Checklist)
+class ChecklistAdmin(admin.ModelAdmin):
+    list_display = ['shortname', 'description', 'priority', 'deadline', 'status']
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ['shortname', 'description', 'priority', 'deadline', 'status', 'comment']
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
